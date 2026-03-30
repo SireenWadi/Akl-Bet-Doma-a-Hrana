@@ -1,0 +1,875 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Domaća hrana | أكل بيت | Home Food</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Playfair+Display:ital,wght@0,700;1,400&family=Cormorant+Garamond:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #F5ECD7;
+    --dark: #1A1108;
+    --gold: #C8963E;
+    --gold-light: #E8B86D;
+    --warm-white: #FDF8EF;
+    --text-muted: #9E7B5A;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--dark); color: var(--cream); font-family: 'Cormorant Garamond', serif; overflow-x: hidden; }
+  body::before {
+    content: ''; position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none; z-index: 1000; opacity: 0.4;
+  }
+
+  .hero {
+    min-height: 100vh; display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    position: relative; padding: 2rem; text-align: center;
+    background: var(--dark);
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background-image: url('Gemini_Generated_Image_yjwqkhyjwqkhyjwq.png');
+    background-size: cover;
+    background-position: left center;
+    background-repeat: no-repeat;
+    animation: heroBgZoom 20s ease-in-out infinite alternate;
+    transform-origin: left center;
+  }
+
+  .hero-bg::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to right,
+      rgba(26,17,8,0.1) 0%,
+      rgba(26,17,8,0.45) 40%,
+      rgba(26,17,8,0.82) 65%,
+      rgba(26,17,8,0.97) 100%
+    ),
+    linear-gradient(
+      to bottom,
+      rgba(26,17,8,0.5) 0%,
+      transparent 25%,
+      transparent 75%,
+      rgba(26,17,8,0.8) 100%
+    );
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  /* Floating food particles */
+  .hero-particles {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+    overflow: hidden;
+  }
+  .particle {
+    position: absolute;
+    font-size: 1.5rem;
+    opacity: 0;
+    animation: floatParticle var(--dur, 8s) var(--delay, 0s) ease-in-out infinite;
+  }
+  @keyframes floatParticle {
+    0% { opacity: 0; transform: translateY(110vh) rotate(0deg) scale(0.5); }
+    10% { opacity: 0.4; }
+    90% { opacity: 0.2; }
+    100% { opacity: 0; transform: translateY(-10vh) rotate(360deg) scale(1); }
+  }
+
+  /* Shimmer overlay */
+  .hero-shimmer {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: linear-gradient(
+      135deg,
+      transparent 0%,
+      rgba(200,150,62,0.04) 50%,
+      transparent 100%
+    );
+    background-size: 200% 200%;
+    animation: shimmerMove 6s ease-in-out infinite;
+  }
+  @keyframes shimmerMove {
+    0% { background-position: 0% 0%; }
+    50% { background-position: 100% 100%; }
+    100% { background-position: 0% 0%; }
+  }
+
+  @keyframes heroBgZoom {
+    0% { transform: scale(1) translateX(0); }
+    100% { transform: scale(1.08) translateX(-20px); }
+  }
+
+  /* Glowing radial accent on top of image */
+  .hero-glow {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: radial-gradient(ellipse 50% 60% at 80% 50%, rgba(200,150,62,0.12) 0%, transparent 70%);
+    animation: glowPulse 4s ease-in-out infinite;
+  }
+  @keyframes glowPulse {
+    0%, 100% { opacity: 0.7; }
+    50% { opacity: 1; }
+  }/* --- التعديل الجديد لتقصير الصور الرأسية --- */
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  align-items: center; /* سنقوم بتمركز الصور عمودياً */
+}
+
+.gallery-item {
+  position: relative;
+  overflow: hidden;
+  border-radius: 20px;
+  border: 2px solid rgba(200,150,62,0.15);
+  cursor: pointer;
+  transition: all 0.4s ease;
+  
+  /* --- أهم جزء للتعديل: تحديد حد أقصى للارتفاع --- */
+  height: 420px; /* جربي هذا الرقم، إذا شعرتِ أنه لا يزال طويلاً، قومي بتقليله (مثلاً 380px) */
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+.gallery-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain; /* سنغير الخاصية من cover إلى contain لتظهر الصورة كاملة داخل الإطار المقصوص */
+  transition: all 0.5s ease;
+  padding: 1rem; /* إضافة هامش داخلي بسيط لإبراز التغليف */
+}
+
+/* --- تنسيقات التفاعل (Hover) كما هي ولكن تم تحسينها --- */
+.gallery-item:hover {
+  border-color: rgba(200,150,62,0.6) !important;
+  transform: translateY(-8px);
+  box-shadow: 0 15px 40px rgba(200,150,62,0.15);
+}
+
+.gallery-item:hover img {
+  transform: scale(1.08); /* تكبير الصورة قليلاً عند التمرير */
+}
+  
+  .hero::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, var(--gold), transparent); }
+
+  .badge { display: inline-flex; align-items: center; gap: 0.5rem; border: 1px solid rgba(200,150,62,0.4); padding: 0.4rem 1.2rem; border-radius: 100px; font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold-light); margin-bottom: 2rem; animation: fadeDown 0.8s ease both; }
+  .hero-logo { width: 120px; height: 120px; border-radius: 50%; border: 2px solid var(--gold); display: flex; align-items: center; justify-content: center; margin: 0 auto 2rem; background: radial-gradient(circle, rgba(200,150,62,0.15), transparent); animation: fadeDown 0.8s 0.1s ease both; box-shadow: 0 0 60px rgba(200,150,62,0.2); font-size: 3rem; }
+  .hero-title { font-family: 'Amiri', serif; font-size: clamp(3rem, 8vw, 6rem); font-weight: 700; color: var(--cream); line-height: 1.1; animation: fadeDown 0.8s 0.2s ease both; text-shadow: 0 2px 40px rgba(200,150,62,0.3); }
+  .hero-sub { font-family: 'Playfair Display', serif; font-size: clamp(1.2rem, 3vw, 2rem); font-style: italic; color: var(--gold-light); margin-top: 0.5rem; animation: fadeDown 0.8s 0.3s ease both; }
+  .hero-divider { width: 80px; height: 1px; background: linear-gradient(90deg, transparent, var(--gold), transparent); margin: 1.5rem auto; animation: fadeDown 0.8s 0.4s ease both; }
+  .hero-desc { font-size: 1.1rem; color: var(--text-muted); max-width: 500px; line-height: 1.8; animation: fadeDown 0.8s 0.5s ease both; font-weight: 300; }
+  .hero-location { margin-top: 1rem; font-size: 0.9rem; color: var(--gold); letter-spacing: 0.1em; animation: fadeDown 0.8s 0.6s ease both; }
+  .hero-cta { margin-top: 2.5rem; display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; animation: fadeDown 0.8s 0.7s ease both; }
+  .btn-primary { background: var(--gold); color: var(--dark); padding: 0.9rem 2rem; border: none; border-radius: 4px; font-family: 'Amiri', serif; font-size: 1.1rem; font-weight: 700; cursor: pointer; text-decoration: none; transition: all 0.3s; display: inline-flex; align-items: center; gap: 0.5rem; }
+  .btn-primary:hover { background: var(--gold-light); transform: translateY(-2px); box-shadow: 0 8px 30px rgba(200,150,62,0.4); }
+  .btn-outline { background: transparent; color: var(--cream); padding: 0.9rem 2rem; border: 1px solid rgba(245,236,215,0.3); border-radius: 4px; font-family: 'Amiri', serif; font-size: 1.1rem; cursor: pointer; text-decoration: none; transition: all 0.3s; display: inline-flex; align-items: center; gap: 0.5rem; }
+  .btn-outline:hover { border-color: var(--gold); color: var(--gold); transform: translateY(-2px); }
+  .scroll-hint { position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 0.5rem; color: var(--text-muted); font-size: 0.75rem; letter-spacing: 0.15em; animation: bounce 2s infinite; z-index: 2; }
+  .scroll-hint::after { content: '↓'; font-size: 1.2rem; color: var(--gold); }
+
+  .lang-bar { position: fixed; top: 1.2rem; left: 50%; transform: translateX(-50%); z-index: 999; display: flex; background: rgba(26,17,8,0.85); backdrop-filter: blur(12px); border: 1px solid rgba(200,150,62,0.25); border-radius: 100px; overflow: hidden; padding: 0.25rem; gap: 0.2rem; }
+  .lang-btn { padding: 0.4rem 1rem; border: none; background: transparent; color: var(--text-muted); font-size: 0.8rem; letter-spacing: 0.1em; cursor: pointer; border-radius: 100px; transition: all 0.3s; font-family: 'Cormorant Garamond', serif; }
+  .lang-btn.active { background: var(--gold); color: var(--dark); font-weight: 600; }
+
+  .section { padding: 5rem 1.5rem; max-width: 960px; margin: 0 auto; }
+  .section-header { text-align: center; margin-bottom: 3rem; }
+  .section-label { font-size: 0.7rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold); display: block; margin-bottom: 1rem; }
+  .section-title { font-family: 'Amiri', serif; font-size: clamp(2rem, 5vw, 3.5rem); color: var(--cream); line-height: 1.2; }
+  .section-sub { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.1rem; color: var(--text-muted); margin-top: 0.5rem; }
+
+  .cat-tabs { display: flex; gap: 0.5rem; justify-content: center; flex-wrap: wrap; margin-bottom: 3rem; }
+  .cat-tab { padding: 0.5rem 1.3rem; border: 1px solid rgba(200,150,62,0.25); background: transparent; color: var(--text-muted); border-radius: 100px; font-family: 'Amiri', serif; font-size: 1rem; cursor: pointer; transition: all 0.3s; }
+  .cat-tab:hover, .cat-tab.active { background: rgba(200,150,62,0.15); border-color: var(--gold); color: var(--gold-light); }
+
+  /* CARDS WITH IMAGE */
+  .menu-grid { display: flex; flex-direction: column; gap: 1.2rem; }
+
+  .menu-card { display: flex; background: rgba(255,255,255,0.03); border: 1px solid rgba(200,150,62,0.12); border-radius: 16px; overflow: hidden; transition: border-color 0.35s, background 0.35s, transform 0.35s, box-shadow 0.35s; opacity: 0; transform: translateY(24px); }
+  .menu-card:hover { border-color: rgba(200,150,62,0.45); background: rgba(200,150,62,0.07); box-shadow: 0 12px 40px rgba(0,0,0,0.35); }
+
+  .card-img-wrap { width: 150px; min-width: 150px; height: 145px; overflow: hidden; flex-shrink: 0; }
+  .card-img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.4s, filter 0.3s; filter: brightness(0.9) saturate(1.1); }
+  .menu-card:hover .card-img { transform: scale(1.06); filter: brightness(1) saturate(1.2); }
+
+  .card-body { flex: 1; padding: 1.1rem 1.4rem; display: flex; flex-direction: column; justify-content: center; gap: 0.3rem; }
+  .card-name { font-family: 'Amiri', serif; font-size: 1.3rem; color: var(--cream); line-height: 1.2; }
+  .card-name-sub { font-size: 0.8rem; color: var(--text-muted); font-style: italic; }
+  .card-desc { font-size: 0.8rem; color: rgba(158,123,90,0.75); font-weight: 300; line-height: 1.5; margin-top: 0.15rem; }
+  .card-footer { display: flex; align-items: center; justify-content: space-between; margin-top: 0.7rem; flex-wrap: wrap; gap: 0.5rem; }
+  .card-price { font-family: 'Playfair Display', serif; font-size: 1.2rem; color: var(--gold-light); }
+  .card-price small { font-size: 0.68rem; color: var(--text-muted); margin-right: 2px; }
+  .card-order-btn { background: rgba(200,150,62,0.15); border: 1px solid rgba(200,150,62,0.35); color: var(--gold-light); padding: 0.3rem 0.85rem; border-radius: 100px; font-family: 'Amiri', serif; font-size: 0.88rem; cursor: pointer; text-decoration: none; transition: all 0.3s; display: inline-flex; align-items: center; gap: 0.3rem; }
+  .card-order-btn:hover { background: var(--gold); color: var(--dark); border-color: var(--gold); }
+
+  .gold-divider { width: 100%; height: 1px; background: linear-gradient(90deg, transparent, var(--gold), transparent); margin: 4rem 0; }
+
+  .order-section { text-align: center; padding: 5rem 1.5rem; background: radial-gradient(ellipse 70% 60% at 50% 50%, rgba(200,150,62,0.08), transparent); position: relative; }
+  .order-section::before, .order-section::after { content: ''; position: absolute; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, rgba(200,150,62,0.3), transparent); }
+  .order-section::before { top: 0; } .order-section::after { bottom: 0; }
+  .order-ways { display: flex; gap: 1.5rem; justify-content: center; flex-wrap: wrap; margin-top: 3rem; }
+  .order-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(200,150,62,0.2); border-radius: 12px; padding: 2rem 2.5rem; text-align: center; transition: all 0.3s; text-decoration: none; color: var(--cream); min-width: 200px; }
+  .order-card:hover { border-color: var(--gold); background: rgba(200,150,62,0.08); transform: translateY(-4px); box-shadow: 0 12px 40px rgba(200,150,62,0.15); }
+  .order-card-icon { font-size: 2.5rem; margin-bottom: 1rem; display: block; }
+  .order-card-title { font-family: 'Amiri', serif; font-size: 1.3rem; color: var(--gold-light); display: block; }
+  .order-card-sub { font-size: 0.85rem; color: var(--text-muted); margin-top: 0.3rem; display: block; }
+.logo-border {
+  width: 140px;
+  height: 140px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 4px solid #fff;
+  box-shadow: 0 0 20px rgba(0,0,0,0.4);
+}
+  footer { text-align: center; padding: 3rem 1.5rem; border-top: 1px solid rgba(200,150,62,0.1); color: var(--text-muted); font-size: 0.85rem; }
+  footer .footer-brand { font-family: 'Amiri', serif; font-size: 1.5rem; color: var(--gold); display: block; margin-bottom: 0.5rem; }
+
+  .wa-float { position: fixed; bottom: 2rem; left: 2rem; width: 58px; height: 58px; background: #25D366; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.6rem; text-decoration: none; box-shadow: 0 4px 20px rgba(37,211,102,0.4); transition: all 0.3s; z-index: 998; animation: pulse 2s infinite; }
+  .wa-float:hover { transform: scale(1.1); }
+
+  @keyframes fadeDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes bounce { 0%, 100% { transform: translateX(-50%) translateY(0); } 50% { transform: translateX(-50%) translateY(8px); } }
+  @keyframes pulse { 0%, 100% { box-shadow: 0 4px 20px rgba(37,211,102,0.4); } 50% { box-shadow: 0 4px 40px rgba(37,211,102,0.7); } }
+
+  .inline-ar, .inline-sr, .inline-en { display: inline; }
+  body.lang-ar .inline-sr, body.lang-ar .inline-en { display: none; }
+  body.lang-sr .inline-ar, body.lang-sr .inline-en { display: none; }
+  body.lang-en .inline-ar, body.lang-en .inline-sr { display: none; }
+
+  @media (max-width: 560px) {
+    .card-img-wrap { width: 110px; min-width: 110px; height: 130px; }
+    .card-body { padding: 0.8rem 0.9rem; }
+    .card-name { font-size: 1.1rem; }
+    .lang-bar { top: 0.6rem; }
+  }
+</style>
+</head>
+<body class="lang-ar">
+
+<div class="lang-bar">
+
+  <button class="lang-btn" onclick="setLang('en',this)">EN</button>
+  <button class="lang-btn" onclick="setLang('sr',this)">Srpski</button>
+
+    <button class="lang-btn active" onclick="setLang('ar',this)">عربي</button>
+</div>
+
+<a class="wa-float" href="https://wa.me/381621988763" target="_blank">📱</a>
+<section class="hero">
+  <!-- Background image with zoom animation -->
+  <div class="hero-bg"></div>
+  <div class="hero-shimmer"></div>
+  <div class="hero-glow"></div>
+  <!-- Floating food particles -->
+  <div class="hero-particles">
+    <span class="particle" style="left:8%;--dur:9s;--delay:0s">🫒</span>
+    <span class="particle" style="left:18%;--dur:12s;--delay:2s">✨</span>
+    <span class="particle" style="left:30%;--dur:8s;--delay:4s">🌿</span>
+    <span class="particle" style="left:72%;--dur:11s;--delay:1s">⭐</span>
+    <span class="particle" style="left:82%;--dur:10s;--delay:3s">🫚</span>
+    <span class="particle" style="left:90%;--dur:13s;--delay:5s">✨</span>
+    <span class="particle" style="left:55%;--dur:9s;--delay:6s">🌾</span>
+  </div>
+
+  <div class="hero-content">
+  <div class="badge">✨ نكهة غزة في سوبوتيكا • Since 2024</div>
+  <div class="hero-logo"><img src="1.jpeg" class="logo-border"></div>
+  
+  <h1 class="hero-title">
+    <span class="inline-ar">سحر المذاق البيتي</span>
+    <span class="inline-sr">Magija domaće kuhinje</span>
+    <span class="inline-en">The Magic of Home Cooking</span>
+  </h1>
+
+  <p class="hero-sub">
+    <span class="inline-ar">أطباق فلسطينية أصيلة.. تُطهى بحب وتُقدم بشغف</span>
+    <span class="inline-sr">Autentični palestinski ukusi.. kuvani s ljubavlju</span>
+    <span class="inline-en">Authentic Palestinian flavors.. cooked with love</span>
+  </p>
+
+  <div class="hero-divider"></div>
+
+  <p class="hero-desc">
+    <span class="inline-ar">من مطبخنا إلى مائدتكم، نأتيكم بأجود المكونات الطازجة لنصنع لكم تجربة طعام لا تُنسى في قلب سوبوتيكا.</span>
+    <span class="inline-sr">Od naše kuhinje do vašeg stola, donosimo najfinije sveže sastojke za nezaboravno iskustvo u srcu Subotice.</span>
+    <span class="inline-en">From our kitchen to your table, we bring the finest fresh ingredients for an unforgettable dining experience in Subotica.</span>
+  </p>
+
+  <div class="hero-cta">
+    <a href="#menu" class="btn-primary">
+      <span class="inline-ar">🛒 استكشف المنيو</span>
+      <span class="inline-sr">🛒 Istražite meni</span>
+      <span class="inline-en">🛒 Explore Menu</span>
+    </a>
+    <a href="https://wa.me/381621988763" target="_blank" class="btn-outline">
+      <span class="inline-ar">📞 اطلب الآن</span>
+      <span class="inline-sr">📞 Naruči odmah</span>
+      <span class="inline-en">📞 Order Now</span>
+    </a>
+  </div>
+  </div><!-- end hero-content -->
+</section>
+
+<section class="section" id="menu">
+  <div class="section-header">
+    <span class="section-label">
+      <span class="inline-ar">قائمة الطعام</span>
+      <span class="inline-sr">Meni</span>
+      <span class="inline-en">Menu</span>
+    </span>
+    <h2 class="section-title">
+      <span class="inline-ar">أطباقنا</span>
+      <span class="inline-sr">Naša jela</span>
+      <span class="inline-en">Our Dishes</span>
+    </h2>
+    <p class="section-sub">
+      <span class="inline-ar">Naša jela · Our Dishes</span>
+      <span class="inline-sr">أطباقنا · Our Dishes</span>
+      <span class="inline-en">أطباقنا · Naša jela</span>
+    </p>
+  </div>
+
+  <div class="cat-tabs">
+    <button class="cat-tab active" onclick="filterCat('all',this)"><span class="inline-ar">الكل</span><span class="inline-sr">Sve</span><span class="inline-en">All</span></button>
+    <button class="cat-tab" onclick="filterCat('main',this)"><span class="inline-ar">أطباق رئيسية</span><span class="inline-sr">Glavna jela</span><span class="inline-en">Main Dishes</span></button>
+    <button class="cat-tab" onclick="filterCat('mezze',this)"><span class="inline-ar">مقبلات</span><span class="inline-sr">Predjela</span><span class="inline-en">Mezze</span></button>
+    <button class="cat-tab" onclick="filterCat('pastry',this)"><span class="inline-ar">معجنات</span><span class="inline-sr">Peciva</span><span class="inline-en">Pastries</span></button>
+    <button class="cat-tab" onclick="filterCat('sweet',this)"><span class="inline-ar">حلويات</span><span class="inline-sr">Slatkiši</span><span class="inline-en">Sweets</span></button>
+  </div>
+
+  <div class="menu-grid" id="menuGrid">
+
+    <div class="menu-card" data-cat="main">
+      <div class="card-img-wrap"><img class="card-img" src="images.jpg" alt="مفتول" onerror="this.src='https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?w=300&q=80'"></div>
+      <div class="card-body">
+        <div class="card-name"><span class="inline-ar">المفتول مع الدجاج</span><span class="inline-sr">Maftul sa piletinom</span><span class="inline-en">Maftoul with Chicken</span></div>
+        <div class="card-name-sub"><span class="inline-ar">Maftul · Palestinian Couscous</span><span class="inline-sr">Palestinski kuskus sa piletinom</span><span class="inline-en">Palestinian Couscous with Chicken</span></div>
+        <div class="card-desc"><span class="inline-ar">كسكسي فلسطيني تقليدي مطبوخ مع دجاج طازج وتوابل البيت</span><span class="inline-sr">Tradicionalni palestinski kuskus sa svežom piletinom i domaćim začinima</span><span class="inline-en">Traditional Palestinian couscous with fresh chicken and homemade spices</span></div>
+        <div class="card-footer">
+          <div class="card-price"><small>RSD</small>1,350 – 1,600</div>
+          <a class="card-order-btn" href="https://wa.me/381621988763?text=مرحبا،+بدي+أطلب+المفتول+مع+الدجاج" target="_blank"><span class="inline-ar">🛒 اطلب</span><span class="inline-sr">🛒 Naruči</span><span class="inline-en">🛒 Order</span></a>
+        </div>
+      </div>
+    </div>
+
+    <div class="menu-card" data-cat="main">
+      <div class="card-img-wrap"><img class="card-img" src="images (1).jpg" alt="مقلوبة لحم" onerror="this.src='https://images.unsplash.com/photo-1574484284002-952d92456975?w=300&q=80'"></div>
+      <div class="card-body">
+        <div class="card-name"><span class="inline-ar">المقلوبة باللحمة</span><span class="inline-sr">Makluba sa govedinom</span><span class="inline-en">Maqluba with Beef</span></div>
+        <div class="card-name-sub"><span class="inline-ar">Upside-Down Rice · Beef</span><span class="inline-sr">Okrenuti pirinač sa govedinom</span><span class="inline-en">Upside-Down Rice with Beef</span></div>
+        <div class="card-desc"><span class="inline-ar">أرز مقلوب مع لحم بقري طري وخضروات - الطبق الفلسطيني الأشهر</span><span class="inline-sr">Okrenuti pirinač sa mekim govedinom i povrćem</span><span class="inline-en">Upside-down rice with tender beef and vegetables - Palestine's most iconic dish</span></div>
+        <div class="card-footer">
+          <div class="card-price"><small>RSD</small>2,200 – 2,600</div>
+          <a class="card-order-btn" href="https://wa.me/381621988763?text=مرحبا،+بدي+أطلب+المقلوبة+باللحمة" target="_blank"><span class="inline-ar">🛒 اطلب</span><span class="inline-sr">🛒 Naruči</span><span class="inline-en">🛒 Order</span></a>
+        </div>
+      </div>
+    </div>
+
+    <div class="menu-card" data-cat="main">
+      <div class="card-img-wrap"><img class="card-img" src="97b12510250b6e62ab4a0f8936974c9c.jpg" alt="مقلوبة دجاج" onerror="this.src='https://images.unsplash.com/photo-1512058564366-18510be2db19?w=300&q=80'"></div>
+      <div class="card-body">
+        <div class="card-name"><span class="inline-ar">المقلوبة بالدجاج</span><span class="inline-sr">Makluba sa piletinom</span><span class="inline-en">Maqluba with Chicken</span></div>
+        <div class="card-name-sub"><span class="inline-ar">Upside-Down Rice · Chicken</span><span class="inline-sr">Okrenuti pirinač sa piletinom</span><span class="inline-en">Lighter version with chicken</span></div>
+        <div class="card-desc"><span class="inline-ar">نسخة أخف من المقلوبة مع دجاج وخضروات طازجة</span><span class="inline-sr">Lakša verzija maklube sa piletinom i svežim povrćem</span><span class="inline-en">Lighter version of maqluba with chicken and fresh vegetables</span></div>
+        <div class="card-footer">
+          <div class="card-price"><small>RSD</small>1,000 – 1,200</div>
+          <a class="card-order-btn" href="https://wa.me/381621988763?text=مرحبا،+بدي+أطلب+المقلوبة+بالدجاج" target="_blank"><span class="inline-ar">🛒 اطلب</span><span class="inline-sr">🛒 Naruči</span><span class="inline-en">🛒 Order</span></a>
+        </div>
+      </div>
+    </div>
+
+    <div class="menu-card" data-cat="main">
+      <div class="card-img-wrap"><img class="card-img" src="76f47c3ca19613ebe56a4f26a29d0819.jpg" alt="فتة" onerror="this.src='https://images.unsplash.com/photo-1547592180-85f173990554?w=300&q=80'"></div>
+      <div class="card-body">
+        <div class="card-name"><span class="inline-ar">الفتة الفلسطينية</span><span class="inline-sr">Fatta sa jogurtom</span><span class="inline-en">Palestinian Fatteh</span></div>
+        <div class="card-name-sub"><span class="inline-ar">Rice · Chicken · Yogurt</span><span class="inline-sr">Pirinač, piletina i jogurt</span><span class="inline-en">Layered bread, rice, chicken & yogurt</span></div>
+        <div class="card-desc"><span class="inline-ar">طبقات من الخبز المحمص والأرز واللحمة اوالدجاج  مع صلصة الزبادي</span><span class="inline-sr">Slojevi tostiranog hleba, pirinča i piletine sa jogurt sosom</span><span class="inline-en">Layers of toasted bread, rice and chicken with a rich yogurt sauce</span></div>
+        <div class="card-footer">
+          <div class="card-price"><small>RSD</small>1,300 – 1,500</div>
+          <a class="card-order-btn" href="https://wa.me/381621988763?text=مرحبا،+بدي+أطلب+الفتة+الفلسطينية" target="_blank"><span class="inline-ar">🛒 اطلب</span><span class="inline-sr">🛒 Naruči</span><span class="inline-en">🛒 Order</span></a>
+        </div>
+      </div>
+    </div>
+
+    <div class="menu-card" data-cat="main">
+      <div class="card-img-wrap"><img class="card-img" src="93ac3dd49a8cb5dcd3f4674312106a95.jpg" alt="ملفوف" onerror="this.src='https://images.unsplash.com/photo-1565299507177-b0ac66763828?w=300&q=80'"></div>
+      <div class="card-body">
+        <div class="card-name"><span class="inline-ar">الملفوف المحشي</span><span class="inline-sr">Punjeni kupus (sarma)</span><span class="inline-en">Stuffed Cabbage</span></div>
+        <div class="card-name-sub"><span class="inline-ar">Sarma · Palestinian Style</span><span class="inline-sr">Punjeni kupus na palestinski način</span><span class="inline-en">Palestinian-style cabbage rolls</span></div>
+        <div class="card-desc"><span class="inline-ar">كرمب محشو باللحم المفروم والأرز والتوابل الفلسطينية</span><span class="inline-sr">Kupus punjen mlevenim mesom, pirinčem i palestinskim začinima</span><span class="inline-en">Cabbage stuffed with minced meat, rice and Palestinian spices</span></div>
+        <div class="card-footer">
+          <div class="card-price"><small>RSD</small>850 – 1,000</div>
+          <a class="card-order-btn" href="https://wa.me/381621988763?text=مرحبا،+بدي+أطلب+الملفوف+المحشي" target="_blank"><span class="inline-ar">🛒 اطلب</span><span class="inline-sr">🛒 Naruči</span><span class="inline-en">🛒 Order</span></a>
+        </div>
+      </div>
+    </div>
+
+    <div class="menu-card" data-cat="main">
+      <div class="card-img-wrap"><img class="card-img" src="bc1e25f34c06134dc0554cd03b86d406.jpg" alt="عرايس" onerror="this.src='https://images.unsplash.com/photo-1565299585323-38d6b0865b47?w=300&q=80'"></div>
+      <div class="card-body">
+        <div class="card-name"><span class="inline-ar">العرايس باللحمة</span><span class="inline-sr">Arayes (punjeni hleb)</span><span class="inline-en">Arayes - Stuffed Bread</span></div>
+        <div class="card-name-sub"><span class="inline-ar">Grilled Stuffed Bread · Beef</span><span class="inline-sr">Grilovani hleb punjen mesom</span><span class="inline-en">Grilled bread with spiced meat</span></div>
+        <div class="card-desc"><span class="inline-ar">خبز مشوي محشو بلحم بقري مفروم متبل بالتوابل العربية</span><span class="inline-sr">Grilovani hleb punjen začinjenim mlevenim mesom</span><span class="inline-en">Grilled bread filled with Arabic-spiced minced beef</span></div>
+        <div class="card-footer">
+          <div class="card-price"><small>RSD</small>1,200 – 1,400</div>
+          <a class="card-order-btn" href="https://wa.me/381621988763?text=مرحبا،+بدي+أطلب+العرايس" target="_blank"><span class="inline-ar">🛒 اطلب</span><span class="inline-sr">🛒 Naruči</span><span class="inline-en">🛒 Order</span></a>
+        </div>
+      </div>
+    </div>
+
+    <div class="menu-card" data-cat="mezze">
+      <div class="card-img-wrap"><img class="card-img" src="ddab2327ff70d44e6d2bd4094b8b18df.jpg" alt="حمص" onerror="this.src='https://images.unsplash.com/photo-1541614101331-1a5a3a194e92?w=300&q=80'"></div>
+      <div class="card-body">
+        <div class="card-name"><span class="inline-ar">حمص بالطحينة والزيتون</span><span class="inline-sr">Humus sa tahinijom</span><span class="inline-en">Hummus with Tahini & Olives</span></div>
+        <div class="card-name-sub"><span class="inline-ar">Domaći humus · Creamy</span><span class="inline-sr">Kremasti domaći humus</span><span class="inline-en">Creamy homemade hummus</span></div>
+        <div class="card-desc"><span class="inline-ar">حمص ناعم بيتي مع طحينة وزيتون وزيت زيتون بكر</span><span class="inline-sr">Kremasti domaći humus sa tahinijom, maslinama i maslinovim uljem</span><span class="inline-en">Smooth homemade hummus with tahini, olives and extra virgin olive oil</span></div>
+        <div class="card-footer">
+          <div class="card-price"><small>RSD</small>650 – 850</div>
+          <a class="card-order-btn" href="https://wa.me/381621988763?text=مرحبا،+بدي+أطلب+الحمص" target="_blank"><span class="inline-ar">🛒 اطلب</span><span class="inline-sr">🛒 Naruči</span><span class="inline-en">🛒 Order</span></a>
+        </div>
+      </div>
+    </div>
+
+    <div class="menu-card" data-cat="mezze">
+      <div class="card-img-wrap"><img class="card-img" src="5838886d25249147ae75fb2751bb6ec4.jpg" alt="فلافل" onerror="this.src='https://images.unsplash.com/photo-1593001874117-c99c800e3eb3?w=300&q=80'"></div>
+      <div class="card-body">
+        <div class="card-name"><span class="inline-ar">الفلافل</span><span class="inline-sr">Falafel</span><span class="inline-en">Falafel</span></div>
+        <div class="card-name-sub"><span class="inline-ar">Hrskavi domaći falafel</span><span class="inline-sr">Hrskavi domaći falafel</span><span class="inline-en">Crispy homemade falafel</span></div>
+        <div class="card-desc"><span class="inline-ar">فلافل مقرمش بيتي مصنوع من الحمص الطازج والأعشاب</span><span class="inline-sr">Hrskavi domaći falafel od svežeg slanutka i začinskog bilja</span><span class="inline-en">Crispy homemade falafel from fresh chickpeas and herbs</span></div>
+        <div class="card-footer">
+          <div class="card-price"><small>RSD</small>500</div>
+          <a class="card-order-btn" href="https://wa.me/381621988763?text=مرحبا،+بدي+أطلب+الفلافل" target="_blank"><span class="inline-ar">🛒 اطلب</span><span class="inline-sr">🛒 Naruči</span><span class="inline-en">🛒 Order</span></a>
+        </div>
+      </div>
+    </div>
+
+    <div class="menu-card" data-cat="pastry">
+      <div class="card-img-wrap"><img class="card-img" src="67e2eb9bf04ece623a84abdef362213b.jpg" alt="ورق عنب" onerror="this.src='https://images.unsplash.com/photo-1628294895950-9805252f784d?w=300&q=80'"></div>
+      <div class="card-body">
+        <div class="card-name"><span class="inline-ar">محشي الدوالي (ورق عنب)</span><span class="inline-sr">Punjeni listovi vinove loze</span><span class="inline-en">Stuffed Vine Leaves</span></div>
+        <div class="card-name-sub"><span class="inline-ar">Warak Dawali · Luxury</span><span class="inline-sr">Luksuzno jelo · Dolma</span><span class="inline-en">Dolma · Rare Luxury Dish</span></div>
+        <div class="card-desc"><span class="inline-ar">ورق عنب محشو بالأرز واللحم - طبق فاخر نادر التحضير</span><span class="inline-sr">Lišće vinove loze punjeno pirinčem i mesom - luksuzno i retko jelo</span><span class="inline-en">Grape leaves stuffed with rice and meat - a rare and precious dish</span></div>
+        <div class="card-footer">
+          <div class="card-price"><small>RSD</small>4,500 – 4,800</div>
+          <a class="card-order-btn" href="https://wa.me/381621988763?text=مرحبا،+بدي+أطلب+محشي+الدوالي" target="_blank"><span class="inline-ar">🛒 اطلب</span><span class="inline-sr">🛒 Naruči</span><span class="inline-en">🛒 Order</span></a>
+        </div>
+      </div>
+    </div>
+
+    <div class="menu-card" data-cat="pastry">
+      <div class="card-img-wrap"><img class="card-img" src="70fe0539da4c2c3bfa45e5c8761ed81d.jpg" alt="معجنات سبانخ" onerror="this.src='https://images.unsplash.com/photo-1509722747041-616f39b57569?w=300&q=80'"></div>
+      <div class="card-body">
+        <div class="card-name"><span class="inline-ar">معجنات سبانخ وجبنة</span><span class="inline-sr">Pita sa spanaćem i sirom</span><span class="inline-en">Spinach & Cheese Pastry</span></div>
+        <div class="card-name-sub"><span class="inline-ar">Spanać i sir · Homemade</span><span class="inline-sr">Domaća pita sa spanaćem</span><span class="inline-en">Fresh pastry with spinach & cheese</span></div>
+        <div class="card-desc"><span class="inline-ar">عجينة بيتية طازجة محشوة بالسبانخ والجبنة الكريمية</span><span class="inline-sr">Svežo domaće testo punjeno spanaćem i kremastim sirom</span><span class="inline-en">Fresh homemade dough filled with spinach and creamy cheese</span></div>
+        <div class="card-footer">
+          <div class="card-price"><small>RSD</small>800 – 1,100</div>
+          <a class="card-order-btn" href="https://wa.me/381621988763?text=مرحبا،+بدي+أطلب+معجنات+السبانخ" target="_blank"><span class="inline-ar">🛒 اطلب</span><span class="inline-sr">🛒 Naruči</span><span class="inline-en">🛒 Order</span></a>
+        </div>
+      </div>
+    </div>
+
+    <div class="menu-card" data-cat="pastry">
+      <div class="card-img-wrap"><img class="card-img" src="f273f4e83fde6b5324425d418cdc5dd8.jpg" alt="بيتزا" onerror="this.src='https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=300&q=80'"></div>
+      <div class="card-body">
+        <div class="card-name"><span class="inline-ar">البيتزا المنزلية</span><span class="inline-sr">Domaća pizza</span><span class="inline-en">Homemade Pizza</span></div>
+        <div class="card-name-sub"><span class="inline-ar">Pizza · Domaće testo</span><span class="inline-sr">Domaće testo i sir</span><span class="inline-en">Fresh homemade dough & cheese</span></div>
+        <div class="card-desc"><span class="inline-ar">عجينة بيتية طازجة مع جبنة وصلصة طماطم مطبوخة بالبيت</span><span class="inline-sr">Svež domaći testo sa sirom i domaćim sosom od paradajza</span><span class="inline-en">Fresh homemade dough with cheese and homemade tomato sauce</span></div>
+        <div class="card-footer">
+          <div class="card-price"><small>RSD</small>450 – 600</div>
+          <a class="card-order-btn" href="https://wa.me/381621988763?text=مرحبا،+بدي+أطلب+البيتزا" target="_blank"><span class="inline-ar">🛒 اطلب</span><span class="inline-sr">🛒 Naruči</span><span class="inline-en">🛒 Order</span></a>
+        </div>
+      </div>
+    </div>
+
+    <div class="menu-card" data-cat="sweet">
+      <div class="card-img-wrap"><img class="card-img" src="14d23e09135face707d1a02ef479bfe4.jpg" alt="كيكة" onerror="this.src='https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=300&q=80'"></div>
+      <div class="card-body">
+        <div class="card-name"><span class="inline-ar">كيكة الشوكولاتة</span><span class="inline-sr">Čokoladna torta</span><span class="inline-en">Chocolate Cake</span></div>
+        <div class="card-name-sub"><span class="inline-ar">Domaća čokoladna torta</span><span class="inline-sr">Bogata domaća torta</span><span class="inline-en">Rich homemade chocolate cake</span></div>
+        <div class="card-desc"><span class="inline-ar">كيكة شوكولاتة بيتية غنية مصنوعة بكاكاو طبيعي وسكر ناعم</span><span class="inline-sr">Bogata domaća čokoladna torta od prirodnog kakaa</span><span class="inline-en">Rich homemade chocolate cake made with natural cocoa and fine sugar</span></div>
+        <div class="card-footer">
+          <div class="card-price"><small>RSD</small>700 – 900</div>
+          <a class="card-order-btn" href="https://wa.me/381621988763?text=مرحبا،+بدي+أطلب+كيكة+الشوكولاتة" target="_blank"><span class="inline-ar">🛒 اطلب</span><span class="inline-sr">🛒 Naruči</span><span class="inline-en">🛒 Order</span></a>
+        </div>
+      </div>
+    </div>
+<div class="menu-card" data-cat="sweet">
+  <div class="card-img-wrap">
+    <img class="card-img" src="WhatsApp Image 2026-03-29 at 12.01.01 AM.jpeg" alt="كعك التمر" onerror="this.src='https://images.unsplash.com/photo-1606313564200-e75d5e30476c?w=300&q=80'">
+  </div>
+
+  <div class="card-body">
+    <div class="card-name">
+      <span class="inline-ar">كعك محشو بعجوة التمر</span>
+      <span class="inline-sr">Kolači sa punjenim datuljama</span>
+      <span class="inline-en">Date-filled Cookies</span>
+    </div>
+
+    <div class="card-name-sub">
+      <span class="inline-ar">كعك تقليدي محشو بعجوة تمر طبيعية</span>
+      <span class="inline-sr">Tradicionalni kolači sa prirodnim punjenjem od datulja</span>
+      <span class="inline-en">Traditional cookies filled with natural date paste</span>
+    </div>
+
+    <div class="card-desc">
+      <span class="inline-ar">كعك طري ولذيذ محشو بعجوة تمر طبيعية، مثالي مع القهوة</span>
+      <span class="inline-sr">Meki i ukusni kolači punjeni prirodnim datuljama, savršeni uz kafu</span>
+      <span class="inline-en">Soft and delicious cookies filled with natural date paste, perfect with coffee</span>
+    </div>
+
+    <div class="card-footer">
+      <div class="card-price">
+        <small>RSD</small>1500 – 2000
+      </div>
+
+      <a class="card-order-btn" href="https://wa.me/381621988763?text=مرحبا،+بدي+أطلب+كعك+محشو+بعجوة+التمر" target="_blank">
+        <span class="inline-ar">🛒 اطلب</span>
+        <span class="inline-sr">🛒 Naruči</span>
+        <span class="inline-en">🛒 Order</span>
+      </a>
+    </div>
+  </div>
+</div>
+
+<div class="menu-card" data-cat="sweet">
+  <div class="card-img-wrap">
+    <img class="card-img" src="5c10b7bae33b9c5c83c5dbe452d15b16.jpg" alt="قطايف" onerror="this.src='https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?w=300&q=80'">
+  </div>
+
+  <div class="card-body">
+    <div class="card-name">
+      <span class="inline-ar">قطايف محشية</span>
+      <span class="inline-sr">Kataif punjene</span>
+      <span class="inline-en">Stuffed Qatayef</span>
+    </div>
+
+    <div class="card-name-sub">
+      <span class="inline-ar">قطايف عربية تقليدية</span>
+      <span class="inline-sr">Tradicionalni arapski desert</span>
+      <span class="inline-en">Traditional Arabic dessert</span>
+    </div>
+
+    <div class="card-desc">
+      <span class="inline-ar">قطايف طرية محشية بالقشطة أو الجوز ومقلية أو مشوية ومغموسة بالشيرة</span>
+      <span class="inline-sr">Meke punjene palačinke sa kremom ili orasima</span>
+      <span class="inline-en">Soft stuffed pancakes filled with cream or nuts and soaked in syrup</span>
+    </div>
+
+    <div class="card-footer">
+      <div class="card-price">
+        <small>RSD</small>400 – 600
+      </div>
+
+      <a class="card-order-btn" href="https://wa.me/381621988763?text=مرحبا،+بدي+أطلب+قطايف" target="_blank">
+        <span class="inline-ar">🛒 اطلب</span>
+        <span class="inline-sr">🛒 Naruči</span>
+        <span class="inline-en">🛒 Order</span>
+      </a>
+    </div>
+  </div>
+</div>
+<div class="menu-card" data-cat="sweet">
+  <div class="card-img-wrap">
+    <img class="card-img" src="b7b0eb2170ce6b59d2ff004a618c79ab.jpg" alt="فطيرة التفاح" onerror="this.src='https://images.unsplash.com/photo-1601004890684-d8cbf643f5f2?w=300&q=80'">
+  </div>
+
+  <div class="card-body">
+    <div class="card-name">
+      <span class="inline-ar">فطيرة التفاح</span>
+      <span class="inline-sr">Pita od jabuka</span>
+      <span class="inline-en">Apple Pie</span>
+    </div>
+
+    <div class="card-name-sub">
+      <span class="inline-ar">فطيرة تقليدية محشية بالتفاح والقرفة</span>
+      <span class="inline-sr">Tradicionalna pita sa jabukama i cimetom</span>
+      <span class="inline-en">Traditional pie with apples and cinnamon</span>
+    </div>
+
+    <div class="card-desc">
+      <span class="inline-ar">فطيرة ذهبية مقرمشة محشية بتفاح طازج مع لمسة قرفة دافئة</span>
+      <span class="inline-sr">Hrskava pita punjena svežim jabukama i cimetom</span>
+      <span class="inline-en">Crispy golden pie filled with fresh apples and warm cinnamon</span>
+    </div>
+
+    <div class="card-footer">
+      <div class="card-price">
+        <small>RSD</small>600 – 800
+      </div>
+
+      <a class="card-order-btn" href="https://wa.me/381621988763?text=مرحبا،+بدي+أطلب+فطيرة+التفاح" target="_blank">
+        <span class="inline-ar">🛒 اطلب</span>
+        <span class="inline-sr">🛒 Naruči</span>
+        <span class="inline-en">🛒 Order</span>
+      </a>
+    </div>
+  </div>
+</div>
+  </div>
+</section>
+<section id="packaging-gallery" style="padding: 5rem 1.5rem; background: #1A1108;">
+  
+  <div class="section-header" style="text-align: center; margin-bottom: 4rem;">
+    <span class="section-label" style="font-size: 0.75rem; color: #C8963E; text-transform: uppercase; letter-spacing: 0.2em;">
+      <span class="inline-ar">احترافية التغليف</span>
+      <span class="inline-sr">Profesionalno Pakovanje</span>
+      <span class="inline-en">Packaging Excellence</span>
+    </span>
+    <h2 class="section-title" style="font-family: 'Amiri', serif; font-size: 2.8rem; color: #F5ECD7; margin-top: 0.5rem;">
+      <span class="inline-ar">أكل بيت.. يوصلك بحب وإتقان</span>
+      <span class="inline-sr">Akl Bet.. stiže sa ljubavlju</span>
+      <span class="inline-en">Akl Bet.. delivered with care</span>
+    </h2>
+  </div>
+
+  <div class="gallery-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; max-width: 1500px; margin: 0 auto;">
+    
+<div class="gallery-item" style="position: relative; overflow: hidden; border-radius: 20px; border: 2px solid rgba(200,150,62,0.1); cursor: pointer; transition: 0.4s; height: 400px;" onclick="openLightbox('WhatsApp Image 2026-03-29 at 12.50.57 AM (1).jpeg')">
+      <img src="WhatsApp Image 2026-03-29 at 12.50.57 AM (1).jpeg" alt="تغليف أكل بيت - فلافل" style="width: 100%; height: 100%; object-fit: cover; display: block; transition: 0.5s;">
+      <div class="gallery-overlay" style="position: absolute; inset: 0; background: linear-gradient(to top, rgba(26,17,8,0.8), transparent); opacity: 0; transition: 0.4s; display: flex; flex-direction: column; justify-content: flex-end; padding: 1.5rem; text-align: start;">
+        <span class="inline-ar" style="color: #F5ECD7; font-family: 'Amiri', serif; font-size: 1.1rem;">تغليف ساندوتش ووجبات الفلافل</span>
+        <span class="inline-sr" style="color: #C8963E; font-size: 0.9rem; font-weight: 600;">Pakovanje za falafel i sendviče</span>
+        <span class="inline-en" style="color: #F5ECD7; font-size: 0.85rem; opacity: 0.8;">Falafel sandwiches & meals packaging</span>
+      </div>
+    </div>
+
+    <div class="gallery-item" style="position: relative; overflow: hidden; border-radius: 20px; border: 2px solid rgba(200,150,62,0.1); cursor: pointer; transition: 0.4s; height: 400px;" onclick="openLightbox('WhatsApp Image 2026-03-29 at 12.50.57 AM (2).jpeg')">
+      <img src="WhatsApp Image 2026-03-29 at 12.50.57 AM (2).jpeg" alt="تغليف أكل بيت - معكرونة" style="width: 100%; height: 100%; object-fit: cover; display: block; transition: 0.5s;">
+      <div class="gallery-overlay" style="position: absolute; inset: 0; background: linear-gradient(to top, rgba(26,17,8,0.8), transparent); opacity: 0; transition: 0.4s; display: flex; flex-direction: column; justify-content: flex-end; padding: 1.5rem; text-align: start;">
+        <span class="inline-ar" style="color: #F5ECD7; font-family: 'Amiri', serif; font-size: 1.1rem;">بوكسات المعكرونة</span>
+        <span class="inline-sr" style="color: #C8963E; font-size: 0.9rem; font-weight: 600;">Kutije za domaću pastu</span>
+        <span class="inline-en" style="color: #F5ECD7; font-size: 0.85rem; opacity: 0.8;">Homemade pasta boxes</span>
+      </div>
+    </div>
+
+    <div class="gallery-item" style="position: relative; overflow: hidden; border-radius: 20px; border: 2px solid rgba(200,150,62,0.1); cursor: pointer; transition: 0.4s; height: 400px;" onclick="openLightbox('WhatsApp Image 2026-03-29 at 12.50.57 AM.jpeg')">
+      <img src="WhatsApp Image 2026-03-29 at 12.50.57 AM.jpeg" alt="تغليف أكل بيت - حلويات" style="width: 100%; height: 100%; object-fit: cover; display: block; transition: 0.5s;">
+      <div class="gallery-overlay" style="position: absolute; inset: 0; background: linear-gradient(to top, rgba(26,17,8,0.8), transparent); opacity: 0; transition: 0.4s; display: flex; flex-direction: column; justify-content: flex-end; padding: 1.5rem; text-align: start;">
+        <span class="inline-ar" style="color: #F5ECD7; font-family: 'Amiri', serif; font-size: 1.1rem;">تغليف الكوكيز والحلويات البيوتية</span>
+        <span class="inline-sr" style="color: #C8963E; font-size: 0.9rem; font-weight: 600;">Pakovanje za domaće kolačiće i dezerte</span>
+        <span class="inline-en" style="color: #F5ECD7; font-size: 0.85rem; opacity: 0.8;">Homemade cookies & desserts packaging</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<style>
+  .gallery-item:hover {
+    border-color: rgba(200,150,62,0.5) !important;
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(200,150,62,0.1);
+  }
+  .gallery-item:hover img {
+    transform: scale(1.05);
+  }
+  .gallery-item:hover .gallery-overlay {
+    opacity: 1 !important;
+  }
+  
+  /* تنسيق الـ Lightbox (عرض الصورة الكبيرة) */
+  #lightbox {
+    display: none;
+    position: fixed; z-index: 9999;
+    inset: 0; background: rgba(0,0,0,0.9);
+    align-items: center; justify-content: center;
+    cursor: zoom-out;
+  }
+  #lightbox img {
+    max-width: 90%; max-height: 90%;
+    border-radius: 10px; border: 3px solid #C8963E;
+    box-shadow: 0 0 50px rgba(200,150,62,0.3);
+  }
+</style>
+
+<div id="lightbox" onclick="closeLightbox()">
+  <img id="lightbox-img" src="" alt="صورة مكبرة">
+</div>
+
+<script>
+  function openLightbox(imgSrc) {
+    document.getElementById('lightbox-img').src = imgSrc;
+    document.getElementById('lightbox').style.display = 'flex';
+  }
+  function closeLightbox() {
+    document.getElementById('lightbox').style.display = 'none';
+  }
+</script>
+<section class="delivery-experience" style="padding: 4rem 1.5rem; background: rgba(200,150,62,0.03);">
+  <div class="section-header" style="margin-bottom: 3rem;">
+    <span class="section-label">
+      <span class="inline-ar">تجربة أكل بيت</span>
+      <span class="inline-sr">Iskustvo Akl Bet</span>
+      <span class="inline-en">Akl Bet Experience</span>
+    </span>
+    <h2 class="section-title" style="font-size: 2.2rem;">
+      <span class="inline-ar">كيف بيوصلك أكلنا؟</span>
+      <span class="inline-sr">Kako stiže vaša hrana?</span>
+      <span class="inline-en">How your food arrives?</span>
+    </h2>
+  </div>
+
+  <div class="experience-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; max-width: 1100px; margin: 0 auto;">
+    
+    <div class="exp-card" style="background: rgba(255,255,255,0.02); border: 1px solid rgba(200,150,62,0.15); padding: 2rem; border-radius: 20px; text-align: center; transition: 0.3s;">
+      <div style="font-size: 3rem; margin-bottom: 1rem;">📦</div>
+      <h3 style="font-family: 'Amiri', serif; color: var(--gold-light); margin-bottom: 1rem;">
+        <span class="inline-ar">تغليف فاخر</span>
+        <span class="inline-sr">Premium Pakovanje</span>
+        <span class="inline-en">Premium Packaging</span>
+      </h3>
+      <p style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.6;">
+        <span class="inline-ar">بيوصلك الأكل في بوكس مرتب ومحكم الإغلاق ليحافظ على سخونته وجودته.</span>
+        <span class="inline-sr">Hrana stiže u pažljivo upakovanoj kutiji koja čuva toplotu i svežinu.</span>
+        <span class="inline-en">Your food arrives in a neatly sealed box to maintain heat and quality.</span>
+      </p>
+    </div>
+
+    <div class="exp-card" style="background: rgba(255,255,255,0.02); border: 1px solid rgba(200,150,62,0.15); padding: 2rem; border-radius: 20px; text-align: center; transition: 0.3s;">
+      <div style="font-size: 3rem; margin-bottom: 1rem;">🍴</div>
+      <h3 style="font-family: 'Amiri', serif; color: var(--gold-light); margin-bottom: 1rem;">
+        <span class="inline-ar">كامل الملحقات</span>
+        <span class="inline-sr">Kompletan Pribor</span>
+        <span class="inline-en">Full Accessories</span>
+      </h3>
+      <p style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.6;">
+        <span class="inline-ar">مع كل وجبة شوكة ومعلقة، وإذا بتحب بنضيفلك صوصاتنا الخاصة المميزة.</span>
+        <span class="inline-sr">Uz svaki obrok dobijate escajg, a po želji dodajemo i naše domaće sosove.</span>
+        <span class="inline-en">Each meal includes cutlery, and we add our signature sauces upon request.</span>
+      </p>
+    </div>
+
+    <div class="exp-card" style="background: rgba(255,255,255,0.02); border: 1px solid rgba(200,150,62,0.15); padding: 2rem; border-radius: 20px; text-align: center; transition: 0.3s;">
+      <div style="font-size: 3rem; margin-bottom: 1rem;">💌</div>
+      <h3 style="font-family: 'Amiri', serif; color: var(--gold-light); margin-bottom: 1rem;">
+        <span class="inline-ar">لمسة حب</span>
+        <span class="inline-sr">Dodir Ljubavi</span>
+        <span class="inline-en">A Touch of Love</span>
+      </h3>
+      <p style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.6;">
+        <span class="inline-ar">رسالة كيوت مكتوبة بخط اليد لتشكركم على اختياركم مطبخنا.</span>
+        <span class="inline-sr">Slatka, rukom pisana poruka kao znak pažnje i zahvalnosti.</span>
+        <span class="inline-en">A cute handwritten note to thank you for choosing our kitchen.</span>
+      </p>
+    </div>
+
+  </div>
+</section>
+<div class="gold-divider" style="max-width:960px;margin:0 auto;"></div>
+
+<section class="order-section" id="order">
+  <div style="max-width:700px;margin:0 auto;">
+    <span class="section-label"><span class="inline-ar">اطلب الآن</span><span class="inline-sr">Naruči sada</span><span class="inline-en">Order Now</span></span>
+    <h2 style="font-family:'Amiri',serif;font-size:clamp(2rem,5vw,3rem);color:var(--cream);">
+      <span class="inline-ar">كيف تطلب؟</span><span class="inline-sr">Kako naručiti?</span><span class="inline-en">How to Order?</span>
+    </h2>
+    <p style="color:var(--text-muted);margin-top:1rem;font-size:1rem;line-height:1.8;">
+      <span class="inline-ar">تواصل معنا عبر واتساب أو اتصل بنا مباشرة 💛</span>
+      <span class="inline-sr">Kontaktirajte nas putem WhatsAppa ili pozovite direktno 💛</span>
+      <span class="inline-en">Contact us via WhatsApp or call us directly 💛</span>
+    </p>
+    <div class="order-ways">
+      <a href="https://wa.me/381621988763" target="_blank" class="order-card">
+        <span class="order-card-icon">💬</span>
+        <span class="order-card-title">WhatsApp</span>
+        <span class="order-card-sub">+381 62 1988763</span>
+      </a>
+      <a href="tel:+381621988763" class="order-card">
+        <span class="order-card-icon">📞</span>
+        <span class="order-card-title"><span class="inline-ar">اتصل بنا</span><span class="inline-sr">Pozovi nas</span><span class="inline-en">Call Us</span></span>
+        <span class="order-card-sub">+381 62 1988763</span>
+      </a>
+      <a href="https://www.instagram.com/home.food.com2?igsh=MXVoMGxxNnVkZjk0OA==" target="_blank" class="order-card">
+        <span class="order-card-icon">📸</span>
+        <span class="order-card-title">Instagram</span>
+        <span class="order-card-sub">@home.food.com2</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span class="footer-brand">أكل بيت · Domaća hrana</span>
+  <p><span class="inline-ar">مطبخ فلسطيني بيتي · سوبوتيكا، صربيا 🇵🇸🇷🇸</span><span class="inline-sr">Palestinska domaća kuhinja · Subotica, Srbija 🇵🇸🇷🇸</span><span class="inline-en">Palestinian Homemade Kitchen · Subotica, Serbia 🇵🇸🇷🇸</span></p>
+  <p style="margin-top:0.5rem;font-size:0.75rem;opacity:0.5;">مطبوخ بحب ✨ · Kuvano sa ljubavlju · Cooked with love</p>
+</footer>
+
+<script>
+  // 1. وظيفة تبديل اللغة وتغيير الاتجاه (Direction)
+  function setLang(lang, btn) {
+    document.body.className = 'lang-' + lang;
+    document.documentElement.dir = (lang === 'ar') ? 'rtl' : 'ltr';
+    document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+    if (btn) btn.classList.add('active');
+  }
+
+  // 2. تفعيل اللغة الإنجليزية تلقائياً عند فتح الصفحة
+  window.addEventListener('DOMContentLoaded', () => {
+    // نبحث عن زر الإنجليزية لتفعيله
+    const enBtn = document.querySelector('.lang-btn[onclick*="en"]');
+    setLang('en', enBtn);
+  });
+
+  // 3. وظيفة تصفية أقسام المنيو
+  function filterCat(cat, btn) {
+    document.querySelectorAll('.cat-tab').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('.menu-card').forEach(item => {
+      item.style.display = (cat === 'all' || item.dataset.cat === cat) ? 'flex' : 'none';
+    });
+  }
+
+  // 4. وظائف معرض الصور (Lightbox) لتكبير صور التغليف
+  function openLightbox(imgSrc) {
+    const lb = document.getElementById('lightbox');
+    const lbImg = document.getElementById('lightbox-img');
+    if (lb && lbImg) {
+      lbImg.src = imgSrc;
+      lb.style.display = 'flex';
+    }
+  }
+
+  function closeLightbox() {
+    const lb = document.getElementById('lightbox');
+    if (lb) lb.style.display = 'none';
+  }
+
+  // 5. تأثيرات الظهور التدريجي (Intersection Observer)
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { 
+        e.target.style.opacity = '1'; 
+        e.target.style.transform = 'translateY(0)'; 
+      }
+    });
+  }, { threshold: 0.08 });
+
+  // تطبيق التأثير على كروت المنيو ومعرض الصور
+  document.querySelectorAll('.menu-card, .gallery-item, .exp-card').forEach((el, i) => {
+    el.style.transition = `opacity 0.5s ${i * 0.07}s ease, transform 0.5s ${i * 0.07}s ease, border-color 0.35s, background 0.35s, box-shadow 0.35s`;
+    observer.observe(el);
+  });
+</script>
+</script>
+</body>
+</html>
